@@ -1,0 +1,31 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户登录</title>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form name="loginForm" method="POST" action="/login">
+    <div style="color: red" th:text="${registState}"></div>
+    <div>
+        <div>用户id:</div>
+        <div><input type="text" name="userId"></div>
+    </div>
+
+    <div>
+        <div>密码:</div>
+        <div><input name="password" type='password'></div>
+    </div>
+    <input type="submit" value="登录">
+    没有账号？-><a href="/userRegist">注册</a>
+    <div style="color: red" th:text="${inputError}"></div>
+</form>
+
+</body>
+</html>

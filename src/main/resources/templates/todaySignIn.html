@@ -1,0 +1,144 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>今日打卡</title>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:text="'欢迎 ：'+${session.user.name}"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/userFunctionSelect">回到主页</a></li>
+                    <li><a href="/todaySignIn">今日打卡</a></li>
+                    <li><a th:href="'/historySignIn/'+${session.user.id}">历史打卡</a></li>
+                    <li><a href="/cancellation">退出登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <form action="/todaySignIn/upload" method="post">
+            <table class="table table-striped">
+                <thread>
+                    <tr>
+                        <th>类目</th>
+                        <th>输入</th>
+                    </tr>
+                </thread>
+                <tbody>
+                <span th:if="${isNull=='no'}">
+                            <tr>
+                                <td>第一次开始学习时间:</td>
+                                <td><input type="text" name="firstStartTime" th:value="${sign.firstStartTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>上午结束学习时间: </td>
+                                <td><input type="text" name="morningEndTime" th:value="${sign.morningEndTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>出发锻炼时间: </td>
+                                <td><input type="text" name="exerciseTime" th:value="${sign.exerciseTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>锻炼完成返回时间:</td>
+                                <td><input type="text" name="exerciseBackTime" th:value="${sign.ExerciseBackTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>晚上开始学习时间:</td>
+                                <td><input type="text" name="nightStartTime" th:value="${sign.nightStartTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>结束时间:</td>
+                                <td><input type="text" name="endTime" th:value="${sign.EndTime}"></td>
+                            </tr>
+                            <tr>
+                                <td>总有效学习时间:</td>
+                                <td><input type="text" name="totalEffectiveTime" th:value="${sign.totalEffectiveTime}">小时</td>
+                            </tr>
+                            <tr>
+                                <td>英语有效学习时间:</td>
+                                <td><input type="text" name="mathEffectiveTime" th:value="${sign.mathEffectiveTime}">小时</td>
+                            </tr>
+                            <tr>
+                                <td>其他:</td>
+                                <td><input type="text" name="englishEffectiveTime"
+                                           th:value="${sign.englishEffectiveTime}">小时</td>
+                            </tr>
+                            <tr>
+                                <td>今日总结:</td>
+                                <td><textarea name="remarks" cols="30" rows="10"
+                                              th:text="${sign.remarks}"></textarea></td>
+                            </tr>
+                        </span>
+
+                <span th:if="${isNull=='yes'}">
+                            <tr>
+                                <td>第一次开始学习时间:</td>
+                                <td><input type="text" name="firstStartTime"></td>
+                            </tr>
+                            <tr>
+                                <td>上午结束学习时间: </td>
+                                <td><input type="text" name="morningEndTime"></td>
+                            </tr>
+                            <tr>
+                                <td>出发锻炼时间: </td>
+                                <td><input type="text" name="exerciseTime"></td>
+                            </tr>
+                            <tr>
+                                <td>锻炼完成返回时间:</td>
+                                <td><input type="text" name="exerciseBackTime"></td>
+                            </tr>
+                            <tr>
+                                <td>晚上开始学习时间:</td>
+                                <td><input type="text" name="nightStartTime"></td>
+                            </tr>
+                            <tr>
+                                <td>结束时间:</td>
+                                <td><input type="text" name="endTime"></td>
+                            </tr>
+                            <tr>
+                                <td>总有效学习时间:</td>
+                                <td><input type="text" name="totalEffectiveTime"></td>
+                            </tr>
+                            <tr>
+                                <td>数学有效学习时间:</td>
+                                <td><input type="text" name="mathEffectiveTime"></td>
+                            </tr>
+                            <tr>
+                                <td>英语有效学习时间:</td>
+                                <td><input type="text" name="englishEffectiveTime"></td>
+                            </tr>
+                            <tr>
+                                <td>今日总结:</td>
+                                <td><textarea name="remarks" cols="30" rows="10"></textarea></td>
+                            </tr>
+                        </span>
+
+                </tbody>
+            </table>
+            <input type="submit" value="提交" onclick="if(confirm('确认提交？')==false)return false;">
+        </form>
+    </div>
+</div>
+</body>
+</html>

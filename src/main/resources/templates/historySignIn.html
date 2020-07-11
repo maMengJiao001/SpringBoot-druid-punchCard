@@ -1,0 +1,108 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>历史打卡</title>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:text="'欢迎 ：'+${session.user.name}"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/userFunctionSelect">回到主页</a></li>
+                <li><a href="/todaySignIn">今日打卡</a></li>
+                <li><a th:href="'/historySignIn/'+${session.user.id}">历史打卡</a></li>
+                <li><a href="/cancellation">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>总有效学习时间</th>
+            <th>显示详情</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="sign:${signIn}">
+            <tr>
+                <td th:text="${sign.date}"></td>
+                <td th:text="${sign.totalEffectiveTime}+'h'"></td>
+
+                <!-- 按钮触发模态框 -->
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" th:data-target="'#myModal'+${sign.id}">显示详情
+                    </button>
+                </td>
+
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" th:id="'myModal'+${sign.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel" th:text="${sign.date}+' 打卡'"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div th:text="'第一次开始学习时间:   '+${sign.firstStartTime}"></div>
+                                <div th:text="'上午结束学习时间:     '+${sign.morningEndTime}"></div>
+                                <div th:text="'出发锻炼时间:         '+${sign.exerciseTime}"></div>
+                                <div th:text="'锻炼完成返回时间:     '+${sign.ExerciseBackTime}"></div>
+                                <div th:text="'晚上开始学习时间:     '+${sign.nightStartTime}"></div>
+                                <div th:text="'结束时间:            '+${sign.EndTime}"></div>
+                                <div th:text="'总有效学习时间:      '+${sign.totalEffectiveTime}+'h'"></div>
+                                <div th:text="'英语有效学习时间: '+${sign.mathEffectiveTime}+'h'"></div>
+                                <div th:text="'其他:    '+${sign.englishEffectiveTime}+'h'"></div>
+                                <div>今日总结：</div>
+                                <div><textarea name="remarks" style="resize:none" cols="30" rows="10" readonly
+                                               th:text="${sign.remarks}"></textarea></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+
+            </tr>
+        </div>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+
+
+</html>
